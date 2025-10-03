@@ -5,8 +5,9 @@ function App() {
   const [tasks, setTasks] = useState([]);
 
   const addTask = () => {
-    setTasks(task);
+    setTasks([...tasks, task]);
     setTask("");
+    console.log("task added");
   };
 
   return (
@@ -27,7 +28,13 @@ function App() {
         >
           Add Task
         </button>
-        <p>{tasks}</p>
+
+        {/* multiple task included */}
+        <ul>
+          {tasks.map((el, i) => {
+            return <li key={i}>{el}</li>;
+          })}
+        </ul>
       </div>
     </div>
   );
