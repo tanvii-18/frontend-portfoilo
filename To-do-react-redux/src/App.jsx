@@ -1,15 +1,14 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addTask } from "./slices/todoSlice";
 
 function App() {
-  const [task, setTask] = useState("");
-  const [tasks, setTasks] = useState([]);
+  const tasks = useSelector((state) => state.todo.tasks);
+  const dispatch = useDispatch();
 
-  const addTask = () => {
-    setTasks([...tasks, task]);
-    setTask("");
-    console.log("task added");
+  const handleAddTask = () => {
+    dispatch(addTask());
   };
-
   return (
     <div className="flex flex-col items-center">
       <h2>Hello From To-do App</h2>
@@ -19,12 +18,11 @@ function App() {
           type="text"
           placeholder="Add task..."
           className="border-[1.3px] p-2 m-2 rounded-[2px]"
-          onChange={(e) => setTask(e.target.value)}
         />
 
         <button
           className="border-[1.5px] rounded-2xl p-2 bg-blue-600 text-cyan-50 cursor-pointer"
-          onClick={addTask}
+          onClick={handleAddTask}
         >
           Add Task
         </button>
