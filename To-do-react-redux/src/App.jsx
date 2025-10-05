@@ -1,23 +1,33 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask } from "./slices/todoSlice";
+import { addTask, deleteTask } from "./slices/todoSlice";
 
 function App() {
+  const [task, setTask] = useState("");
+
   const tasks = useSelector((state) => state.todo.tasks);
   const dispatch = useDispatch();
 
   const handleAddTask = () => {
-    dispatch(addTask());
+    dispatch(addTask(task));
+    setTask("");
   };
+
+  const handleDeleteTask = (index) => {
+    dispatch(deleteTask(index));
+  };
+
   return (
     <div className="flex flex-col items-center">
-      <h2>Hello From To-do App</h2>
+      <h2 className="text-4xl m-2 text-blue-800">Todoist</h2>
 
       <div>
         <input
           type="text"
           placeholder="Add task..."
           className="border-[1.3px] p-2 m-2 rounded-[2px]"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
         />
 
         <button
@@ -28,9 +38,27 @@ function App() {
         </button>
 
         {/* multiple task included */}
-        <ul>
+        <ul className="w-[100%] flex flex-col">
           {tasks.map((el, i) => {
-            return <li key={i}>{el}</li>;
+            return (
+              <div className="flex m-2 place-content-between">
+                <li key={i}>{el}</li>
+
+                {/* update task */}
+                <div>
+                  <button className="bg-blue-300 rounded-2xl p-1 px-2">
+                    Update
+                  </button>
+                  {/* delete task */}
+                  <button
+                    className="bg-red-600 p-1 px-2 text-amber-50 rounded-3xl"
+                    onClick={() => handleDeleteTask(i)}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            );
           })}
         </ul>
       </div>
