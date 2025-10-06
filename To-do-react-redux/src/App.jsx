@@ -1,20 +1,31 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, deleteTask } from "./slices/todoSlice";
+import { addTask, deleteTask, editTask } from "./slices/todoSlice";
 
 function App() {
   const [task, setTask] = useState("");
+  const [EditTask, setEditTask] = useState(null);
 
   const tasks = useSelector((state) => state.todo.tasks);
   const dispatch = useDispatch();
 
   const handleAddTask = () => {
-    dispatch(addTask(task));
+    if (EditTask !== null) {
+      dispatch(editTask({ i: EditTask, newTask: task }));
+      setEditTask(null);
+    } else {
+      dispatch(addTask(task));
+    }
     setTask("");
   };
 
   const handleDeleteTask = (index) => {
     dispatch(deleteTask(index));
+  };
+
+  const handleEdit = (i) => {
+    setTask(tasks[i]);
+    setEditTask(i);
   };
 
   return (
@@ -46,12 +57,15 @@ function App() {
 
                 {/* update task */}
                 <div>
-                  <button className="bg-blue-300 rounded-2xl p-1 px-2">
-                    Update
+                  <button
+                    className="bg-blue-300 rounded-2xl p-1 px-2 cursor-pointer"
+                    onClick={() => handleEdit(i)}
+                  >
+                    Edit
                   </button>
                   {/* delete task */}
                   <button
-                    className="bg-red-600 p-1 px-2 text-amber-50 rounded-3xl"
+                    className="bg-red-600 p-1 px-2 text-amber-50 rounded-3xl cursor-pointer"
                     onClick={() => handleDeleteTask(i)}
                   >
                     Delete
