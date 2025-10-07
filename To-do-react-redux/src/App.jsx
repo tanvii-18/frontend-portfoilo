@@ -5,6 +5,7 @@ import { addTask, deleteTask, editTask } from "./slices/todoSlice";
 function App() {
   const [task, setTask] = useState("");
   const [EditTask, setEditTask] = useState(null);
+  const [inputVisible, setInputVisible] = useState(false);
 
   const tasks = useSelector((state) => state.todo.tasks);
   const dispatch = useDispatch();
@@ -30,9 +31,14 @@ function App() {
 
   return (
     <div className="flex flex-col items-center">
-      <h2 className="text-4xl m-2 text-blue-800">Todoist</h2>
+      <h2 className="text-4xl m-2 text-blue-800">Good Morning, T !🌞</h2>
 
       <div>
+        <div>
+          <h2>Today's Tasks</h2>
+          <span className="text-gray-400 text-[10px]">7th October,2025</span>
+        </div>
+
         <input
           type="text"
           placeholder="Add task..."
