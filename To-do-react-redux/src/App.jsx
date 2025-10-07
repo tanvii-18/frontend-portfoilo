@@ -34,11 +34,11 @@ function App() {
       <h2 className="text-4xl m-2 text-blue-800">Good Morning, T !🌞</h2>
 
       <div>
-        <div>
+        // todo date and time
+        {/* <div>
           <h2>Today's Tasks</h2>
           <span className="text-gray-400 text-[10px]">7th October,2025</span>
-        </div>
-
+        </div> */}
         <input
           type="text"
           placeholder="Add task..."
@@ -46,14 +46,12 @@ function App() {
           value={task}
           onChange={(e) => setTask(e.target.value)}
         />
-
         <button
           className="border-[1.5px] rounded-2xl p-2 bg-blue-600 text-cyan-50 cursor-pointer"
           onClick={handleAddTask}
         >
           Add Task
         </button>
-
         {/* multiple task included */}
         <ul className="w-[100%] flex flex-col">
           {tasks.map((el, i) => {
