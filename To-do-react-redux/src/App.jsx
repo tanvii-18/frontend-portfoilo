@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addTask, deleteTask, editTask } from "./slices/todoSlice";
+import {
+  addTask,
+  completeTask,
+  deleteTask,
+  editTask,
+} from "./slices/todoSlice";
 
 function App() {
   const [task, setTask] = useState("");
   const [EditTask, setEditTask] = useState(null);
   // const [inputVisible, setInputVisible] = useState(false);
-  const [compelte, setComplete] = useState(false);
+  // const [compelte, setComplete] = useState(false);
 
   const tasks = useSelector((state) => state.todo.tasks);
   const dispatch = useDispatch();
@@ -28,6 +33,10 @@ function App() {
   const handleEdit = (i) => {
     setTask(tasks[i]);
     setEditTask(i);
+  };
+
+  const handleComplete = () => {
+    setComplete(!compelte);
   };
 
   return (
@@ -60,11 +69,6 @@ function App() {
           {tasks.map((el, i) => {
             return (
               <div className="flex m-2 place-content-between">
-                {compelte ? (
-                  <i class="fa-regular fa-circle"></i>
-                ) : (
-                  <i class="fa-solid fa-circle-check"></i>
-                )}
                 <li key={i}>{el}</li>
                 {/* update task */}
                 <div>
