@@ -9,7 +9,11 @@ const todoSlice = createSlice({
   initialState,
   reducers: {
     addTask: (state, action) => {
-      state.tasks.push(action.payload);
+      const newTask = {
+        task: action.payload,
+        complete: false,
+      };
+      state.tasks.push(newTask);
     },
     deleteTask: (state, action) => {
       state.tasks.splice(action.payload, 1);
@@ -18,10 +22,12 @@ const todoSlice = createSlice({
       const { i, newTask } = action.payload;
       state.tasks[i] = newTask;
     },
-    // completeTask: (state, action) => {
-    //   const i = action.payload;
-    //   state.tasks[i].complete = !state.tasks[i].complete;
-    // },
+    completeTask: (state, action) => {
+      const todos = state.tasks.find((task) => task.id === action.payload);
+      if (todos) {
+        todos.completed = !todos.completed;
+      }
+    },
   },
 });
 

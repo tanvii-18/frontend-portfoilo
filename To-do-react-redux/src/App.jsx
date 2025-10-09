@@ -10,8 +10,6 @@ import {
 function App() {
   const [task, setTask] = useState("");
   const [EditTask, setEditTask] = useState(null);
-  // const [inputVisible, setInputVisible] = useState(false);
-  const [complete, setComplete] = useState(false);
 
   const tasks = useSelector((state) => state.todo.tasks);
   const dispatch = useDispatch();
@@ -35,9 +33,8 @@ function App() {
     setEditTask(i);
   };
 
-  const handleComplete = () => {
-    const isTaskComplete = !complete;
-    setComplete(isTaskComplete);
+  const handleComplete = (id) => {
+    dispatch(completeTask(id));
   };
 
   return (
@@ -69,21 +66,16 @@ function App() {
         <ul className="w-[100%] flex flex-col">
           {tasks.map((el, i) => {
             return (
-              <div className="flex m-2 place-content-between">
-                <i onClick={handleComplete}>
-                  {complete ? (
+              <div className="flex m-2 place-content-between" key={i}>
+                <i onClick={() => handleComplete(el.id)}>
+                  {el.completed ? (
                     <i className="fa-regular fa-circle"></i>
                   ) : (
-                    <i className="fa-solid fa-circle-check"></i>
+                    <i className="fa-solid fa-check"></i>
                   )}
                 </i>
-                <i key={i}>
-                  {complete ? (
-                    <p>{el}</p>
-                  ) : (
-                    <del className="text-gray-400">{el}</del>
-                  )}
-                </i>
+
+                <i key={i}>{el.task}</i>
                 {/* update task */}
                 <div>
                   <button
