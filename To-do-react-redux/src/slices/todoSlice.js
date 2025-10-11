@@ -20,7 +20,7 @@ const todoSlice = createSlice({
     },
     editTask: (state, action) => {
       const { i, newTask } = action.payload;
-      state.tasks[i] = newTask;
+      state.tasks[i].task = newTask;
     },
     completeTask: (state, action) => {
       const todos = state.tasks.find((task) => task.id === action.payload);

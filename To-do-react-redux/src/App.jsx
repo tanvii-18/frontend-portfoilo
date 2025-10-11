@@ -17,6 +17,7 @@ function App() {
   const handleAddTask = () => {
     if (EditTask !== null) {
       dispatch(editTask({ i: EditTask, newTask: task }));
+      console.log("got edit");
       setEditTask(null);
     } else {
       dispatch(addTask(task));
@@ -29,8 +30,9 @@ function App() {
   };
 
   const handleEdit = (i) => {
-    setTask(tasks[i]);
+    setTask(tasks[i].task);
     setEditTask(i);
+    console.log("worked edit");
   };
 
   const handleComplete = (id) => {
@@ -69,9 +71,9 @@ function App() {
               <div className="flex m-2 place-content-between" key={i}>
                 <i onClick={() => handleComplete(el.id)}>
                   {el.completed ? (
-                    <i className="fa-regular fa-circle"></i>
+                    <i class="fa-solid fa-circle-check"></i>
                   ) : (
-                    <i className="fa-solid fa-check"></i>
+                    <i className="fa-regular fa-circle"></i>
                   )}
                 </i>
 
