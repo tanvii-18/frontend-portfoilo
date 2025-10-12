@@ -10,9 +10,27 @@ import {
 function App() {
   const [task, setTask] = useState("");
   const [EditTask, setEditTask] = useState(null);
+  const currentDate = new Date();
+  const date = currentDate.getDate();
+  const month = currentDate.toLocaleString("en-US", { month: "long" });
+  const year = currentDate.getFullYear();
 
   const tasks = useSelector((state) => state.todo.tasks);
   const dispatch = useDispatch();
+
+  function getDaySuffix(day) {
+    if (day > 3 && day < 21) return "th";
+    switch (day % 10) {
+      case 1:
+        return "st";
+      case 2:
+        return "nd";
+      case 3:
+        return "rd";
+      default:
+        return "th";
+    }
+  }
 
   const handleAddTask = () => {
     if (EditTask !== null) {
@@ -45,10 +63,12 @@ function App() {
 
       <div>
         {/* todo date and time */}
-        {/* <div>
+        <div>
           <h2>Today's Tasks</h2>
-          <span className="text-gray-400 text-[10px]">7th October,2025</span>
-        </div> */}
+          <p className="text-gray-400 text-[10px]">{`${date}${getDaySuffix(
+            date
+          )} ${month},${year}`}</p>
+        </div>
 
         <input
           type="text"
