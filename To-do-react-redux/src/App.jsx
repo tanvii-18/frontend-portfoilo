@@ -14,6 +14,7 @@ function App() {
   // const [inputShow, setInputShow] = useState(false);
 
   const currentDate = new Date();
+  // const day_night = currentDate.
   const date = currentDate.getDate();
   const month = currentDate.toLocaleString("en-US", { month: "long" });
   const year = currentDate.getFullYear();
@@ -83,7 +84,7 @@ function App() {
           onChange={(e) => setTask(e.target.value)}
         />
         <button
-          className="rounded-4xl p-3 bg-blue-600 text-cyan-50 hover:p-2.5 cursor-pointer"
+          className="rounded-4xl p-3 bg-blue-600 text-cyan-50 transition duration-700 ease-in-out hover:p-[11px] cursor-pointer"
           onClick={handleAddTask}
         >
           {!toggleIcon ? (
