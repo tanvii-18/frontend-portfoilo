@@ -6,6 +6,7 @@ import {
   deleteTask,
   editTask,
 } from "./slices/todoSlice";
+import js from "@eslint/js";
 
 function App() {
   const [task, setTask] = useState("");
@@ -86,19 +87,26 @@ function App() {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <h2 className="text-4xl m-2 text-blue-800">Good {updateHour}, T ! </h2>
-
+    <div className="flex flex-col items-center my-2">
       <div>
+        <h2 className="text-4xl my-2 text-blue-800">Good {updateHour}, T ! </h2>
+        <p className="text-gray-400 text-[10px]">{`${
+          currentDate.date
+        }${getDaySuffix(currentDate.date)} ${currentDate.month},${
+          currentDate.year
+        }`}</p>
+      </div>
+
+      <div className="flex my-5">
         <input
           type="text"
           placeholder="Add task..."
-          className="border-[1.3px] p-2 m-2 rounded-[2px]"
+          className="border-[1.3px] p-3 w-100 rounded-4xl border-[#155efc] shadow-[1px_1px_15px_rgba(0,81,255,0.1)] outline-none"
           value={task}
           onChange={(e) => setTask(e.target.value)}
         />
         <button
-          className="rounded-4xl p-3 bg-blue-600 text-cyan-50 transition duration-700 ease-in-out hover:p-[11px] cursor-pointer"
+          className="rounded-4xl absolute right-[34%] p-3 bg-blue-600 text-cyan-50 cursor-pointer"
           onClick={handleAddTask}
         >
           {!toggleIcon ? (
@@ -129,23 +137,20 @@ function App() {
             </svg>
           )}
         </button>
+      </div>
 
+      <div className="w-[30%]">
         {/* multiple task included */}
-        <ul className="w-[100%] flex flex-col">
+        <ul className="w-[100%] flex flex-col items-start">
           {/* todo date and time */}
           <div>
             <h2>Today's Tasks</h2>
-            <p className="text-gray-400 text-[10px]">{`${
-              currentDate.date
-            }${getDaySuffix(currentDate.date)} ${currentDate.month},${
-              currentDate.year
-            }`}</p>
           </div>
 
           {/* list of todos */}
           {tasks.map((el, i) => {
             return (
-              <div className="flex m-2 place-content-between" key={i}>
+              <div className="flex my-2 w-full gap-3" key={i}>
                 <i onClick={() => handleComplete(el.id)}>
                   {el.completed ? (
                     <i class="fa-solid fa-circle-check"></i>
@@ -154,21 +159,60 @@ function App() {
                   )}
                 </i>
 
-                <i key={i}>{el.task}</i>
+                {el.completed ? (
+                  <i key={i} className="line-through text-gray-400">
+                    {el.task}
+                  </i>
+                ) : (
+                  <i key={i}>{el.task}</i>
+                )}
                 {/* update task */}
-                <div>
+                <div className="w-full flex flex-row place-content-end gap-2">
                   <button
-                    className="bg-blue-300 rounded-2xl p-1 px-2 cursor-pointer"
+                    className="cursor-pointer"
                     onClick={() => handleEdit(i)}
                   >
-                    Edit
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M3.78181 16.3092L3 21L7.69086 20.2182C8.50544 20.0825 9.25725 19.6956 9.84119 19.1116L20.4198 8.53288C21.1934 7.75922 21.1934 6.5049 20.4197 5.73126L18.2687 3.58024C17.495 2.80658 16.2406 2.80659 15.4669 3.58027L4.88841 14.159C4.30447 14.7429 3.91757 15.4947 3.78181 16.3092Z"
+                        stroke="#0b5eba"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M14 6L18 10"
+                        stroke="#0b5eba"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
                   </button>
                   {/* delete task */}
                   <button
-                    className="bg-red-600 p-1 px-2 text-amber-50 rounded-3xl cursor-pointer"
+                    className="cursor-pointer"
                     onClick={() => handleDeleteTask(i)}
                   >
-                    Delete
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                    >
+                      <g fill="none">
+                        <path d="M24 0v24H0V0zM12.593 23.258l-.011.002-.071.035-.02.004-.014-.004-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01-.017.428.005.02.01.013.104.074.015.004.012-.004.104-.074.012-.016.004-.017-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113-.013.002-.185.093-.01.01-.003.011.018.43.005.012.008.007.201.093c.012.004.023 0 .029-.008l.004-.014-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014-.034.614c0 .012.007.02.017.024l.015-.002.201-.093.01-.008.004-.011.017-.43-.003-.012-.01-.01z" />
+                        <path
+                          fill="#ba0b0b"
+                          d="M20 5a1 1 0 1 1 0 2h-1l-.003.071-.933 13.071A2 2 0 0 1 16.069 22H7.93a2 2 0 0 1-1.995-1.858l-.933-13.07A1.017 1.017 0 0 1 5 7H4a1 1 0 0 1 0-2zm-3.003 2H7.003l.928 13h8.138zM14 2a1 1 0 1 1 0 2h-4a1 1 0 0 1 0-2z"
+                        />
+                      </g>
+                    </svg>
                   </button>
                 </div>
               </div>
