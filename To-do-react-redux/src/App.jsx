@@ -15,16 +15,30 @@ function App() {
     date: "",
     month: "",
     year: "",
+    currentHour: "",
   });
-  // const [inputShow, setInputShow] = useState(false);
+  const [updateHour, setUpdateHour] = useState("");
 
   useEffect(() => {
     const now = new Date();
+    const hour = now.getHours();
+
     setCurrentDate({
       date: now.getDate(),
       month: now.toLocaleString("en-US", { month: "long" }),
       year: now.getFullYear(),
+      currentHour: hour,
     });
+
+    // Time of the day !!
+
+    if (hour >= 6 && hour < 12) {
+      setUpdateHour("Morning");
+    } else if (hour >= 12 && hour < 18) {
+      setUpdateHour("Afternoon");
+    } else {
+      setUpdateHour("Night");
+    }
   }, []);
 
   const tasks = useSelector((state) => state.todo.tasks);
@@ -73,19 +87,9 @@ function App() {
 
   return (
     <div className="flex flex-col items-center">
-      <h2 className="text-4xl m-2 text-blue-800">Good Morning, T !🌞</h2>
+      <h2 className="text-4xl m-2 text-blue-800">Good {updateHour}, T ! </h2>
 
       <div>
-        {/* todo date and time */}
-        <div>
-          <h2>Today's Tasks</h2>
-          <p className="text-gray-400 text-[10px]">{`${
-            currentDate.date
-          }${getDaySuffix(currentDate.date)} ${currentDate.month},${
-            currentDate.year
-          }`}</p>
-        </div>
-
         <input
           type="text"
           placeholder="Add task..."
@@ -128,6 +132,17 @@ function App() {
 
         {/* multiple task included */}
         <ul className="w-[100%] flex flex-col">
+          {/* todo date and time */}
+          <div>
+            <h2>Today's Tasks</h2>
+            <p className="text-gray-400 text-[10px]">{`${
+              currentDate.date
+            }${getDaySuffix(currentDate.date)} ${currentDate.month},${
+              currentDate.year
+            }`}</p>
+          </div>
+
+          {/* list of todos */}
           {tasks.map((el, i) => {
             return (
               <div className="flex m-2 place-content-between" key={i}>
