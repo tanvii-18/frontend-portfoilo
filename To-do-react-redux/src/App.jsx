@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addTask,
@@ -11,13 +11,21 @@ function App() {
   const [task, setTask] = useState("");
   const [EditTask, setEditTask] = useState(null);
   const [toggleIcon, setToggleIcon] = useState(false);
+  const [currentDate, setCurrentDate] = useState({
+    date: "",
+    month: "",
+    year: "",
+  });
   // const [inputShow, setInputShow] = useState(false);
 
-  const currentDate = new Date();
-  // const day_night = currentDate.
-  const date = currentDate.getDate();
-  const month = currentDate.toLocaleString("en-US", { month: "long" });
-  const year = currentDate.getFullYear();
+  useEffect(() => {
+    const now = new Date();
+    setCurrentDate({
+      date: now.getDate(),
+      month: now.toLocaleString("en-US", { month: "long" }),
+      year: now.getFullYear(),
+    });
+  }, []);
 
   const tasks = useSelector((state) => state.todo.tasks);
   const dispatch = useDispatch();
@@ -71,9 +79,11 @@ function App() {
         {/* todo date and time */}
         <div>
           <h2>Today's Tasks</h2>
-          <p className="text-gray-400 text-[10px]">{`${date}${getDaySuffix(
-            date
-          )} ${month},${year}`}</p>
+          <p className="text-gray-400 text-[10px]">{`${
+            currentDate.date
+          }${getDaySuffix(currentDate.date)} ${currentDate.month},${
+            currentDate.year
+          }`}</p>
         </div>
 
         <input
