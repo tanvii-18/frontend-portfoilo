@@ -6,7 +6,6 @@ import {
   deleteTask,
   editTask,
 } from "./slices/todoSlice";
-import js from "@eslint/js";
 
 function App() {
   const [task, setTask] = useState("");
@@ -88,8 +87,15 @@ function App() {
 
   return (
     <div className="flex flex-col items-center my-2">
-      <div>
-        <h2 className="text-4xl my-2 text-blue-800">Good {updateHour}, T ! </h2>
+      <div className="my-4">
+        <h2
+          className="text-4xl text-blue-800"
+          style={{
+            fontFamily: "Borel, cursive",
+          }}
+        >
+          Good {updateHour}, T !{" "}
+        </h2>
         <p className="text-gray-400 text-[10px]">{`${
           currentDate.date
         }${getDaySuffix(currentDate.date)} ${currentDate.month},${
@@ -144,13 +150,22 @@ function App() {
         <ul className="w-[100%] flex flex-col items-start">
           {/* todo date and time */}
           <div>
-            <h2>Today's Tasks</h2>
+            <h2
+              style={{
+                fontFamily: "Poiret One, sans-serif",
+                fontWeight: "800",
+                letterSpacing: "1px",
+                color: "gray",
+              }}
+            >
+              Today's Tasks
+            </h2>
           </div>
 
           {/* list of todos */}
           {tasks.map((el, i) => {
             return (
-              <div className="flex my-2 w-full gap-3" key={i}>
+              <div className="flex my-4 w-full gap-3" key={i}>
                 <i onClick={() => handleComplete(el.id)}>
                   {el.completed ? (
                     <i class="fa-solid fa-circle-check"></i>
@@ -160,11 +175,28 @@ function App() {
                 </i>
 
                 {el.completed ? (
-                  <i key={i} className="line-through text-gray-400">
+                  <p
+                    key={el.id}
+                    className="line-through text-gray-400"
+                    style={{
+                      fontFamily: "Albert Sans, sans-serif",
+                      fontWeight: "400",
+                      width: "100%",
+                    }}
+                  >
                     {el.task}
-                  </i>
+                  </p>
                 ) : (
-                  <i key={i}>{el.task}</i>
+                  <p
+                    key={i}
+                    style={{
+                      fontFamily: "Albert Sans, sans-serif",
+                      fontWeight: "400",
+                      width: "100%",
+                    }}
+                  >
+                    {el.task}
+                  </p>
                 )}
                 {/* update task */}
                 <div className="w-full flex flex-row place-content-end gap-2">
